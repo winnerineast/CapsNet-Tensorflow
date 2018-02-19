@@ -113,9 +113,9 @@ def main(_):
 
         train_op = opt.apply_gradients(grad, global_step=global_step)
 
-        sess = tf.Session(config=tf.ConfigProto(
-            allow_soft_placement=True,
-            log_device_placement=False))
+        config = tf.ConfigProto(allow_soft_placement=True, log_device_placement=False)
+        config.gpu_options.allow_growth = True
+        sess = tf.Session(config=config)
         sess.run(tf.global_variables_initializer())
 
         saver = tf.train.Saver(tf.global_variables(), max_to_keep=cfg.epoch)
